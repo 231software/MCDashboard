@@ -1,16 +1,16 @@
 {
-    "name":"Full Moon Platform plugin example",
+    "name":"MCDashboard",
     "main":"index",
-    "description":"A plugin developed with Full Moon Platform.",
+    "description":"由sidebarDesigner进化而来，全新、更强的侧边栏插件！",
     "build_dir":"dist",
-    "data_path":"fmp_plugin_example",
+    "data_path":"mcdashboard",
     "src_dir":"src",
-    "plugin_dir_name":"fmp_plugin_example",
+    "plugin_dir_name":"mcdashboard",
     "supported_platforms":{
         "mode":"bl",
         "list":[]
     },
-    "permissionRoot":"fmppluginexample",
+    "permissionRoot":"mcdashboard",
     "features":[],
     "priorities":{
         "default":[
