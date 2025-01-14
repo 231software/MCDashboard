@@ -19,5 +19,6 @@
         "default":[
             "LNSDK"
         ]
-    }
+    },
+    "files":["textRenderer.ts"]
 }

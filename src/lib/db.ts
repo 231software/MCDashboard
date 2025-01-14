@@ -45,6 +45,8 @@ export class PlayerPreferencesTable<T extends DBManager>{
     }
     init(){
         //创建玩家个人设置表
+        //初始化玩家时，要记录一个玩家数据是否被玩家自行修改过的列，一旦玩家修改过该列，这个值就为true
+        //如果玩家未修改过数据，那么每次他初始化都会用配置文件中的默认数据覆盖
         this.manager.db.initTable(this.tableName,...this.columns)
         for(let column of this.columns)this.manager.db.newColumn(this.tableName,column)
     }

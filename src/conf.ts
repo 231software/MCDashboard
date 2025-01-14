@@ -1,4 +1,4 @@
-import { JsonFile, YMLFile } from "../lib";
+import { JsonFile, Logger, YMLFile } from "../lib";
 import { data_path } from "../lib/plugin_info";
 import { AnimatedTextConfig, AnimationType, MCTextColor } from "./lib/display";
 
@@ -11,43 +11,56 @@ conf.init("sidebar",{})
 export const sidebarConf=new YMLFile(conf_path,["sidebar"])
 
 sidebarConf.init("default",{
-    title:[
-        {
-            type:"alt",
-            content:["欢迎使用MCDashboard!"],
-            length:0,
-            interval:0,
-            color:"light_purple",
-            bold:true
-        },
-        {
-            type:"alt",
-            contents:["请管理员打开config.yml进行配置"],
-            length:0,
-            interval:0,
-            color:"light_purple",
-            bold:true
-        }
-    ],
+    title:{
+        type:"roll",
+        contents:[
+            [{
+                text:"欢迎使用MCDashboard!",
+                color:"light_purple",
+                bold:true
+            }],
+            [{
+                text:"请管理员打开config.yml进行配置",
+                color:"light_purple",
+                bold:true
+            }]
+        ],
+        length:0,
+        interval:0,
+        spaces:3
+    },
     contents:[
         {
             type:"roll",
-            contents:["执行/sidebar指令自定义侧边栏"],
+            contents:[[
+                {
+                    text:"执行/sidebar指令自定义侧边栏",
+                    color:"aqua"
+                }
+            ]],
             length:10,
             interval:1,
-            color:"aqua"
+            spaces:3
         },{
             type:"roll",
-            contents:["管理员执行/motd临时修改motd"],
+            contents:[[
+                {
+                    text:"管理员执行/motd临时修改motd",
+                    color:"aqua"
+                }
+            ]],
             length:10,
             interval:1,
-            color:"aqua"
+            spaces:3
         },{
             type:"roll",
-            contents:["执行/compass开关高精度罗盘"],
+            contents:[[{
+                text:"执行/compass开关高精度罗盘",
+                color:"aqua"
+            }]],
             length:10,
             interval:1,
-            color:"aqua"
+            spaces:3
         }
 
     ]
@@ -55,31 +68,36 @@ sidebarConf.init("default",{
 
 conf.init("motd",{
     freq:5.3,
-    content:[
-        {
-            type:"roll",
-            contents:["欢迎使用MCDashboard!"],
-            length:7,
-            interval:0,
-            color:"aqua",
-            bold:false,
-            italic:false
-        },{
-            type:"roll",
-            contents:["请管理员打开config.yml进行配置"],
-            length:7,
-            interval:0,
-            color:"light_purple",
-            bold:false,
-            italic:false
-        }
-    ]
+    content:{
+        type:"roll",
+        contents:[
+            [
+                {
+                    text:"欢迎使用MCDashboard!",
+                    color:"aqua",
+                    bold:false,
+                    italic:false
+                },
+                {
+                    text:"请管理员打开config.yml进行配置",
+                    color:"light_purple",
+                    bold:false,
+                    italic:false
+                }
+            ]
+        ],
+        length:7,
+        interval:0,
+        spaces:3
+    }
 })
+export const motdConf=new YMLFile(conf_path,["motd"])
 
 export function animationConfFromFile(conf:any):AnimatedTextConfig{
     const type=(()=>{
         switch(conf.type){
             case "roll":return AnimationType.ROLL;
+            case "shake":return AnimationType.SHAKE;
             case "alt":return AnimationType.ALT;
             case undefined:throw new Error("以下动画配置未配置动画类型：\n"+JSON.stringify(conf.type,undefined,4))
             default:throw new Error("配置文件中有不支持的动画类型"+conf.type)
@@ -100,15 +118,12 @@ export function animationConfFromFile(conf:any):AnimatedTextConfig{
             default:throw new Error("配置文件中有不支持的颜色："+conf.color)
         }
     })()
+    const contents=conf.contents
+    contents.color=color
     return {
         type,
-        content:conf.content,
+        contents,
         interval:conf.interval,
-        color,
         length:conf.length,
-        shake:conf.shake,
-        pause:conf.pause,
-        bold:conf.bold,
-        italic:conf.italic
     }
 }
