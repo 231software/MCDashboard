@@ -126,7 +126,6 @@ conf.init("motd",{
 export const motdConf=new YMLFile(conf_path,["motd"])
 //计算量较大，可能需要用单独的cpu核心处理
 export function animationConfFromFile(conf:any):AnimatedTextConfig{
-    Logger.info(conf)
     const type=(()=>{
         switch(conf.type){
             case "roll":return AnimationType.ROLL;

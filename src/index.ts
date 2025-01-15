@@ -30,7 +30,7 @@ class MotdLoop{
             //msg.target.platform为java版
             switch(msg.target?.position){
                 case "motd":{
-                    Logger.info(msg.result)
+                    //Logger.info(msg.result)
                     setMotd(msg.result)
                     break;
                 }

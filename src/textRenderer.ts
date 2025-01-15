@@ -56,7 +56,6 @@ function render(conf:AnimatedTextConfig[],frame:number,vars:GameVars,target:any)
                 const results=processAltPattern(contents,frame,length)
                 //生成输出结果
                 let partResultText=generateTextInGame(results)
-                replyLogger.info(partResultText)
                 resultText=resultText+partResultText
                 break;
             }
@@ -408,7 +407,8 @@ function processAltPattern(input:{
             const splittedChs:string[]=[]
             for(let ch of preColoredPattern.chs){
                 //长度够了就不加了，长度不够才会加
-                if(addedChs<length){
+                //如果长度等于0，他就会一直加，直到全加入
+                if(length==0||addedChs<length){
                     splittedChs.push(ch)
                     addedChs++
                 }
@@ -425,9 +425,8 @@ function processAltPattern(input:{
             italic:pattern.italic
         })
     }
-    replyLogger.info(addedChs)
-    //长度不够但是字符已经没了
-    if(addedChs<length){
+    //已经指定了长度，而且长度不够但是字符已经没了
+    if(length!=0&&addedChs<length){
         const placeholder:{
             text: {
                 mcColorCodes: string[];
